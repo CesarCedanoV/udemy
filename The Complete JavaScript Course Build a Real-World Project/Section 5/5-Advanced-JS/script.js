@@ -109,7 +109,7 @@ console.log(obj.city);
 
 /////////////////////////////
 // Lecture: Passing functions as arguments
-
+/*
 var years = [1990,1994,1995,2000,2015];
 
 function arrayCalc(arr, fn){
@@ -141,3 +141,34 @@ var rates = arrayCalc(ages,maxHeartRate);
 console.log(ages);
 console.log(fullAges);
 console.log(rates);
+*/
+
+
+
+/////////////////////////////
+// Lecture: Functions returning functions
+/*
+function interviewQuestion(job) {
+  if (job == 'designer') {
+    return function(name){
+      console.log(name + ', can you please explain what UX design is?');
+    }
+  }else if (job == 'developer') {
+    return function(name){
+      console.log(name + ', which one is your main programming language?');
+    }
+  } else {
+    return function(name) {
+      console.log('Hello ' +name + ', what do you do?');
+    }
+  }
+}
+
+var developerQuestion = interviewQuestion('developer');
+developerQuestion('Cesar');
+
+var designerQuestion = interviewQuestion('designer');
+designerQuestion('Abimael');
+
+interviewQuestion('Doctor')('Arlenys');
+*/
