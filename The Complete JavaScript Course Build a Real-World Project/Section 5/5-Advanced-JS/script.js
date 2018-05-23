@@ -337,6 +337,7 @@ c) correct answer (I would use a number for this)
 */
 
 (function(){
+
   function Question(title,answers,correctAnswer){
     this.title = title;
     this.answers = answers;
@@ -350,33 +351,63 @@ c) correct answer (I would use a number for this)
     }
   };
   
-  Question.prototype.checkAnswerr = function(answer){
+  Question.prototype.checkAnswerr = function(answer,callback){
+    let sc;
     if (answer == this.correctAnswer){
       console.log('Correct answer!');
+      sc = callback(true);
     }else {
       console.log('Incorrect answer, try again.');
+      sc = callback(false);
     }
+    this.displayScore(sc);
+  };
+  
+  Question.prototype.displayScore = function(score){
+    console.log('Your current score is:'+score);
+    console.log('------------------------------------');
   }
   
+  let questions = [
+    new Question('Which is the largest country in the world?'
+      ,['United States of America', 'Russia','Canada']
+      ,1),
+    new Question('What is the largest planet in our solar system?'
+      ,['Jupiter','Earth','Sun']
+      ,0),
+    new Question('2 + 2 / 2?'
+      ,['2', '4','3']
+      ,2),
+    new Question('What\'s my name?'
+      ,['Cesar', 'Abimael','Arlenys']
+      ,0)
+  ];
+         
+  function score() {
+    var sc = 0;
+    return function(correct){
+      if (correct) {
+        sc++;
+      }
+      return sc;
+    }
+  };
+
+  let  currentScore = score();
+
+  function nextQuestion(){
+    let randomIndex = Math.floor(Math.random() * questions.length);
+    questions[randomIndex].displayQuestion();
+    let selectedAnswer = prompt('Please select the correct answer');
+    if (selectedAnswer != 'exit'){
+      questions[randomIndex].checkAnswerr(parseInt(selectedAnswer),currentScore);
+      nextQuestion();
+    }else {
+      console.log("End of the Game.")
+    }
+  }
+  nextQuestion();
   
-  let questions = [new Question('Which is the largest country in the world?'
-                    ,['United States of America', 'Russia','Canada']
-                    ,1),
-                  new Question('What is the largest planet in our solar system?'
-                    ,['Jupiter','Earth','Sun']
-                    ,0),
-                  new Question('2 + 2 / 2?'
-                    ,['2', '4','3']
-                    ,2),
-                  new Question('What\'s my name?'
-                    ,['Cesar', 'Abimael','Arlenys']
-                    ,0)
-                  ];
-  
-  let randomIndex = Math.floor(Math.random() * questions.length);
-  questions[randomIndex].displayQuestion();
-  let selectedAnswer = parseInt(prompt('Please select the correct answer'));
-  questions[randomIndex].checkAnswerr(selectedAnswer);
 })();
 
 
