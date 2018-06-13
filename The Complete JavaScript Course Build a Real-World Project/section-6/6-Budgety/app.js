@@ -1,6 +1,6 @@
 // Budget Controller
 let budgetController = (function() {
-    let Expense = function(id,description,value,updatedAt){
+    let Expenses = function(id,description,value,updatedAt){
         this.id = id;
         this.description = description;
         this.value = value;
@@ -13,16 +13,26 @@ let budgetController = (function() {
         this.value = value;
         this.lastUpdated = updatedAt;
     };
+
+    let calculateTotal = function(type){
+        let total = 0;
+        data.allRecords[type].forEach(function(item) {
+            total += item.vale;
+        });
+        data.totals[type] = total
+    };
  
     let data = {
         allRecords: {
-            expense:[],
+            expenses:[],
             income:[]
         },
         totals:{
-            expense:0,
+            expenses:0,
             income:0
-        }
+        },
+        budget: 0,
+        percentage:-1
 
     }
 
@@ -37,8 +47,8 @@ let budgetController = (function() {
             }
             
             // Create a new Record base on 'inc' or 'exp' type
-            if (type === 'expense') {
-                newRecord = new Expense(newID, des, val, Date());
+            if (type === 'expenses') {
+                newRecord = new Expenses(newID, des, val, Date());
             }else if (type === 'income'){
                 newRecord = new Income(newID, des, val, Date());
             }
@@ -47,6 +57,25 @@ let budgetController = (function() {
 
             // Return the new record
             return newRecord;
+        },
+        calculateBudget: function(type){
+            // calculate total income and expenses
+            calculateTotal('income');
+            calculateTotal('expenses');
+
+            // calculate the budget income - expeses
+            data.budget = data.totals.income - data.totals.expense;
+
+            // calculate the percentage of incomes that we spent
+            data.percentage = Math.round((data.totals.expense / data.totals.income) * 100) 
+        },
+        getBudget: function(){
+            return {
+                budget : data.budget,
+                totalIncome: data.totals.Income,
+                totalExpenses: data.totals.Expenses,
+                percentage: data.percentage,
+            }
         },
         testing: function(){
             console.log(data);
@@ -81,9 +110,9 @@ let uiController = (function() {
             if (type === 'income'){
                 listCotainer = mainBladeComponents.incomeList;
                 html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
-            }else if (type === 'expense'){
+            }else if (type === 'expenses'){
                 listCotainer = mainBladeComponents.expensesList;
-                html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+                html = '<div class="item clearfix" id="expenses-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
             }
           
             // Replace the placeholder texrt with some actual data
@@ -127,8 +156,12 @@ let appController = (function(budgetCtrl,uiCtrl) {
 
     let updateBudget = function() {
         // 1. Calculate the budget
+        budgetController.calculateBudget();
+
         // 2. Return the budget
+        let budget = budgetController.getBudget();
         // 3. Display the budget on the UI
+        console.log(budget);
     };
 
     let ctrlAddItem = function(){
