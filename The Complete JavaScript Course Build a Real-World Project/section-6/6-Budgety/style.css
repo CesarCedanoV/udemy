@@ -63,13 +63,13 @@ body {
     letter-spacing: 2px;
 }
 
-.budget__income,
+.budget__incomes,
 .budget__expenses {
     padding: 12px;
     text-transform: uppercase;
 }
 
-.budget__income {
+.budget__incomes {
     margin-bottom: 10px;
     background-color: #28B9B5;
 }
@@ -78,7 +78,7 @@ body {
     background-color: #FF5049;
 }
 
-.budget__income--text,
+.budget__incomes--text,
 .budget__expenses--text {
     float: left;
     font-size: 13px;
@@ -86,13 +86,13 @@ body {
     margin-top: 2px;
 }
 
-.budget__income--value,
+.budget__incomes--value,
 .budget__expenses--value {
     letter-spacing: 1px;
     float: left;
 }
 
-.budget__income--percentage,
+.budget__incomes--percentage,
 .budget__expenses--percentage {
     float: left;
     width: 34px;
@@ -181,7 +181,7 @@ body {
     margin: 60px auto;
 }
 
-.income {
+.incomes {
     float: left;
     width: 475px;
     margin-right: 50px;
@@ -231,8 +231,8 @@ h2 {
     text-align: center;
 }
 
-.income .item__value,
-.income .item__delete--btn {
+.incomes .item__value,
+.incomes .item__delete--btn {
     color: #28B9B5;
 }
 

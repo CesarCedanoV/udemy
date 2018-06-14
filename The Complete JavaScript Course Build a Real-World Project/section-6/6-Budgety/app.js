@@ -7,7 +7,7 @@ let budgetController = (function() {
         this.lastUpdated = updatedAt;
     };
     
-    let Income = function(id,description,value,updatedAt){
+    let Incomes = function(id,description,value,updatedAt){
         this.id = id;
         this.description = description;
         this.value = value;
@@ -17,19 +17,20 @@ let budgetController = (function() {
     let calculateTotal = function(type){
         let total = 0;
         data.allRecords[type].forEach(function(item) {
-            total += item.vale;
+            total += item.value;
         });
-        data.totals[type] = total
+        data.totals[type] = total;
+        console.log("Total:"+data.totals[type] )
     };
  
     let data = {
         allRecords: {
             expenses:[],
-            income:[]
+            incomes:[]
         },
         totals:{
             expenses:0,
-            income:0
+            incomes:0
         },
         budget: 0,
         percentage:-1
@@ -49,8 +50,8 @@ let budgetController = (function() {
             // Create a new Record base on 'inc' or 'exp' type
             if (type === 'expenses') {
                 newRecord = new Expenses(newID, des, val, Date());
-            }else if (type === 'income'){
-                newRecord = new Income(newID, des, val, Date());
+            }else if (type === 'incomes'){
+                newRecord = new Incomes(newID, des, val, Date());
             }
             // Push it into our data structure 
             data.allRecords[type].push(newRecord);
@@ -59,21 +60,21 @@ let budgetController = (function() {
             return newRecord;
         },
         calculateBudget: function(type){
-            // calculate total income and expenses
-            calculateTotal('income');
+            // calculate total incomes and expenses
+            calculateTotal('incomes');
             calculateTotal('expenses');
 
-            // calculate the budget income - expeses
-            data.budget = data.totals.income - data.totals.expense;
+            // calculate the budget incomes - expenses
+            data.budget = data.totals.incomes - data.totals.expenses;
 
             // calculate the percentage of incomes that we spent
-            data.percentage = Math.round((data.totals.expense / data.totals.income) * 100) 
+            data.percentage = Math.round((data.totals.expenses / data.totals.incomes) * 100) 
         },
         getBudget: function(){
             return {
                 budget : data.budget,
-                totalIncome: data.totals.Income,
-                totalExpenses: data.totals.Expenses,
+                totalIncomes: data.totals.incomes,
+                totalExpenses: data.totals.expenses,
                 percentage: data.percentage,
             }
         },
@@ -92,7 +93,7 @@ let uiController = (function() {
         addRecordDescription:document.getElementsByClassName('add__description').item(0),
         addRecordValue:document.getElementsByClassName('add__value').item(0),
         addRecordBtn:document.getElementsByClassName('add__btn').item(0),
-        incomeList:document.getElementsByClassName('income__list').item(0),
+        incomesList:document.getElementsByClassName('incomes__list').item(0),
         expensesList:document.getElementsByClassName('expenses__list').item(0),
     }
 
@@ -107,9 +108,9 @@ let uiController = (function() {
         addRecordToList:function(obj,type){
             var html, newHtml,listCotainer;
             // Create HTML string with placeholder text
-            if (type === 'income'){
-                listCotainer = mainBladeComponents.incomeList;
-                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
+            if (type === 'incomes'){
+                listCotainer = mainBladeComponents.incomesList;
+                html = '<div class="item clearfix" id="incomes-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
             }else if (type === 'expenses'){
                 listCotainer = mainBladeComponents.expensesList;
                 html = '<div class="item clearfix" id="expenses-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>';
