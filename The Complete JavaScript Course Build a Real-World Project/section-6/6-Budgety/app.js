@@ -20,7 +20,6 @@ let budgetController = (function() {
             total += item.value;
         });
         data.totals[type] = total;
-        console.log("Total:"+data.totals[type] )
     };
  
     let data = {
@@ -59,6 +58,16 @@ let budgetController = (function() {
             // Return the new record
             return newRecord;
         },
+        deleteRecord: function(type,id){
+            let ids = data.allRecords[type].map(function(item){
+                return item.id;
+            });
+            let index = ids.indexOf(id);
+            if (index !== -1 ){
+                data.allRecords[type].splice(index,1);
+            }
+            
+        },
         calculateBudget: function(type){
             // calculate total incomes and expenses
             calculateTotal('incomes');
@@ -73,6 +82,9 @@ let budgetController = (function() {
             }else {
                 data.percentage = -1
             }
+        },
+        calculatePercentages:function(){
+            
         },
         getBudget: function(){
             return {
@@ -103,6 +115,7 @@ let uiController = (function() {
         incomesLabel:document.getElementsByClassName('budget__incomes--value').item(0),
         expensesLabel:document.getElementsByClassName('budget__expenses--value').item(0),
         expensesPercentageLabel:document.getElementsByClassName('budget__expenses--percentage').item(0),
+        listContainer:document.getElementsByClassName('container').item(0),
     }
 
     return {
@@ -131,6 +144,10 @@ let uiController = (function() {
 
             // Insert the HTML into the DOM
             listCotainer.insertAdjacentHTML('beforeend',newHtml);
+        },
+        deleteRecordFromList:function(selectorId){
+            let element = document.getElementById(selectorId)
+            element.parentNode.removeChild(element);
         },
         clearFields: function(){
             let addRecordFields = new Array(mainBladeComponents.addRecordDescription,mainBladeComponents.addRecordValue);
@@ -172,6 +189,7 @@ let appController = (function(budgetCtrl,uiCtrl) {
                 ctrlAddItem();
             }
         });
+        mainBladeComponent.listContainer.addEventListener('click',ctrlDeleteItem);
     };
 
     let updateBudget = function() {
@@ -183,6 +201,14 @@ let appController = (function(budgetCtrl,uiCtrl) {
 
         // 3. Display the budget on the UI
         uiController.displayBudget(budget)
+    };
+    
+    let updatePercentages = function(){
+        // 1. Calculate percentages
+
+        // 2. Read percentages from the budget controller
+        
+        // 3. Update the UI with the new percentages
     };
 
     let ctrlAddItem = function(){
@@ -201,10 +227,37 @@ let appController = (function(budgetCtrl,uiCtrl) {
             
             // 5. Calculate and Update the new budget
             updateBudget();
+
+            // 6. Calculate and Update percentages
+            updatePercentages();
+
         }else {
             alert("Invalid description/value fields.")
         }
       
+    };
+
+    let ctrlDeleteItem = function(event) {
+        let recordId,type,id
+        recordId = event.target.parentNode.parentNode.parentNode.parentNode.id;
+        
+        if (recordId) {
+            type = recordId.split('-')[0]
+            id = parseInt(recordId.split('-')[1])
+        }
+
+        // 1. delete the item from the data structure
+        budgetController.deleteRecord(type,id)
+
+        // 2. delete the item from the UI
+        uiController.deleteRecordFromList(recordId)
+        
+        // 3. Update and show the new budget
+        updateBudget();
+
+        // 4. Calculate and Update percentages
+        updatePercentages();    
+
     };
 
     return {
