@@ -138,6 +138,7 @@ let uiController = (function() {
         expensesLabel:document.getElementsByClassName('budget__expenses--value').item(0),
         expensesPercentageLabel:document.getElementsByClassName('budget__expenses--percentage').item(0),
         listContainer:document.getElementsByClassName('container').item(0),
+        monthLabel:document.getElementsByClassName('budget__title--month').item(0),
     };
     
     let formatNumber = function(number,type){
@@ -153,6 +154,12 @@ let uiController = (function() {
         dec = number.split('.')[1];
 
         return (type === 'expenses' ? '-' : '+') + ' ' + int + '.' + dec;
+    };
+    
+    let nodeListForEach = function(list,callback){
+        for (let i = 0; i < list.length; i++){
+            callback(list[i],i);
+        }
     };
 
     return {
@@ -213,12 +220,6 @@ let uiController = (function() {
         displayPercentages: function(percentages){
             let fields = document.querySelectorAll('.item__percentage');
 
-            let nodeListForEach = function(list,callback){
-                for (let i = 0; i < list.length; i++){
-                    callback(list[i],i);
-                }
-            };
-
             nodeListForEach(fields,function(current,index){
                 if (percentages[index] > 0 ){
                     current.textContent = percentages[index] + '%'
@@ -227,6 +228,22 @@ let uiController = (function() {
                 }
                 
             });
+        },
+        displayDate: function(){
+            let months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            let now = new Date();
+            year = now.getFullYear();
+            month = now.getMonth();
+            mainBladeComponents.monthLabel.textContent = months[month] + ' - ' + year
+        },
+        changedType: function(){
+            uiElements = [mainBladeComponents.addRecordType,mainBladeComponents.addRecordDescription,mainBladeComponents.addRecordValue];
+
+            uiElements.forEach(function(element){
+                element.classList.toggle('red-focus');
+            });
+            mainBladeComponents.addRecordBtn.classList.toggle('red');
+
         },
         getMainBladeComponents: function(){
             return mainBladeComponents;
@@ -240,15 +257,16 @@ let appController = (function(budgetCtrl,uiCtrl) {
     
     let setUpEventListeners = function(){
         
-        let mainBladeComponent = uiController.getMainBladeComponents();
-        mainBladeComponent.addRecordBtn.addEventListener('click', ctrlAddItem);
+        let mainBladeComponents = uiController.getMainBladeComponents();
+        mainBladeComponents.addRecordBtn.addEventListener('click', ctrlAddItem);
     
         document.addEventListener('keypress', function(event){
             if (event.keyCode === 13 || event.which === 13) {
                 ctrlAddItem();
             }
         });
-        mainBladeComponent.listContainer.addEventListener('click',ctrlDeleteItem);
+        mainBladeComponents.listContainer.addEventListener('click',ctrlDeleteItem);
+        mainBladeComponents.addRecordType.addEventListener('change',uiController.changedType);
     };
 
     let updateBudget = function() {
@@ -326,6 +344,7 @@ let appController = (function(budgetCtrl,uiCtrl) {
     return {
         init:function(){
             console.log('Application has started at '+Date())
+            uiController.displayDate();
             uiController.displayBudget({
                 budget : 0,
                 totalIncomes: 0,
