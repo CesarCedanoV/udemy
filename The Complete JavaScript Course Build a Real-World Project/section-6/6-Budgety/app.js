@@ -138,7 +138,22 @@ let uiController = (function() {
         expensesLabel:document.getElementsByClassName('budget__expenses--value').item(0),
         expensesPercentageLabel:document.getElementsByClassName('budget__expenses--percentage').item(0),
         listContainer:document.getElementsByClassName('container').item(0),
-    }
+    };
+    
+    let formatNumber = function(number,type){
+        let int,dec,sign
+        number = Math.abs(number);
+        number = number.toFixed(2);
+
+        int = number.split('.')[0];
+        if (int.length > 3) {
+            int = int.substr(0,int.length-3) + ',' + int.substr(int.length - 3,3);
+        }
+
+        dec = number.split('.')[1];
+
+        return (type === 'expenses' ? '-' : '+') + ' ' + int + '.' + dec;
+    };
 
     return {
         getInput: function() {
@@ -162,7 +177,7 @@ let uiController = (function() {
             // Replace the placeholder texrt with some actual data
             newHtml = html.replace('%id%',obj.id);
             newHtml = newHtml.replace('%description%',obj.description);
-            newHtml = newHtml.replace('%value%',obj.value);
+            newHtml = newHtml.replace('%value%',formatNumber(obj.value,type));
 
             // Insert the HTML into the DOM
             listCotainer.insertAdjacentHTML('beforeend',newHtml);
@@ -181,9 +196,13 @@ let uiController = (function() {
             addRecordFields[0].focus();
         },
         displayBudget: function(obj){
-            mainBladeComponents.budgetLabel.textContent = obj.budget;
-            mainBladeComponents.incomesLabel.textContent = obj.totalIncomes;
-            mainBladeComponents.expensesLabel.textContent = obj.totalExpenses;
+            let budgetType;
+            obj.budget > 0 ? budgetType = 'incomes' : budgetType = 'expenses';
+            mainBladeComponents.budgetLabel.textContent = formatNumber(obj.budget,budgetType);
+            mainBladeComponents.incomesLabel.textContent = formatNumber(obj.totalIncomes,'incomes');
+            mainBladeComponents.expensesLabel.textContent = formatNumber(obj.totalExpenses,'expenses');
+
+
             if (obj.percentage > 0 ){
                 mainBladeComponents.expensesPercentageLabel.textContent = obj.percentage+'%';
             }else {
