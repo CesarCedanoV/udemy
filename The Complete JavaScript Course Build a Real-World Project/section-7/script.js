@@ -20,7 +20,7 @@ function driversLicence5(passedTest){
     }
     console.log(firstName5+' born in '+yearOfBirth5+' is now officially allowed to drive a car.')
 }
-driversLicence5(true);
+// driversLicence5(true);
 
 
 // ES5
@@ -31,4 +31,21 @@ function driversLicence6(passedTest){
     }
     console.log(firstName6+' born in '+yearOfBirth6+' is now officially allowed to drive a car.')
 }
-driversLicence6(true);
+// driversLicence6(true);
+
+
+///////////////////////////////
+// Lecture: Blocks and IIFEs
+
+
+// ES6
+{
+    console.log("Block");
+}
+
+
+// ES5
+(function(){
+    console.log("IIFE");
+})();
+
