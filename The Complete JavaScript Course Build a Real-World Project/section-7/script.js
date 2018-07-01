@@ -39,13 +39,47 @@ function driversLicence6(passedTest){
 
 
 // ES6
-{
-    console.log("Block");
-}
+// {
+//     console.log("Block");
+// }
 
+
+// // ES5
+// (function(){
+//     console.log("IIFE");
+// })();
+
+/////////////////////////////////
+// Lecture: Destructing
 
 // ES5
-(function(){
-    console.log("IIFE");
-})();
+var cesar = ['Cesar',23];
+var name = cesar[0];
+var age = cesar[1];
 
+// ES6 
+{
+let [name, age] = ['Cesar',23]
+console.log(`${name} is ${age} years old.`)
+}
+
+let person = {
+    firstName:`Cesar`,
+    lastName:`Cedano`,
+    career:`Developer`,
+};
+
+let {firstName:nombre,lastName:apellido,career:profesion} = person;
+console.log(`${nombre} ${apellido} is ${profesion}.`)
+
+
+{
+    const calcAgeReteriment = (yearOfBirth) => {
+        let age = new Date().getFullYear() - yearOfBirth;
+        return [age, 40 - age];
+    }   
+
+    let [age, retirement] = calcAgeReteriment(1994);
+
+    console.log(`I'm ${age} and i'll retired myself in ${retirement} years`);
+}
