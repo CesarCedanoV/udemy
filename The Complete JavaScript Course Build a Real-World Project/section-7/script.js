@@ -124,15 +124,45 @@
 // box5.clickMe();
 
 // ES6
-// {
-//     console.log("Block");
+// const box6 = {
+//     color: `blue`,
+//     position: 2,
+//     clickMe: () => {
+//         document.querySelector(`.blue`).addEventListener(`click`, () => {
+//             var str = `This is box number ${this.position} and it is ${this.color}`;
+//             alert(str);
+//         })
+//     }
 // }
+// box6.clickMe();
 
 
-// // ES5
-// (function(){
-//     console.log("IIFE");
-// })();
+
+
+// ES5
+// function Person(name) {
+//     this.name = name;
+// }
+// Person.prototype.myFrinds5 = function(friends){
+//     var arr = friends.map(function(element){
+//         return this.name + ' is friends with ' + element;
+//     }.bind(this));
+//     console.log(arr);
+// }
+// var friends = ["Arlenys","Abimael","Ulloa"];
+// new Person('Cesar').myFrinds5(friends);
+
+// ES6
+// function Person(name) {
+//     this.name = name;
+// }
+// Person.prototype.myFrinds6 = function(friends){
+//     let arr = friends.map( element => `${this.name} is friends with ${element}`);
+//     console.log(arr);
+// }
+// let friends = ["Arlenys","Abimael","Ulloa"];
+// new Person('Cesar').myFrinds6(friends);
+
 
 /////////////////////////////////
 // Lecture: Destructing
