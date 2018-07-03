@@ -167,34 +167,86 @@
 /////////////////////////////////
 // Lecture: Destructing
 
+// // ES5
+// var cesar = ['Cesar',23];
+// var name = cesar[0];
+// var age = cesar[1];
+
+// // ES6 
+// {
+// let [name, age] = ['Cesar',23]
+// console.log(`${name} is ${age} years old.`)
+// }
+
+// let person = {
+//     firstName:`Cesar`,
+//     lastName:`Cedano`,
+//     career:`Developer`,
+// };
+
+// let {firstName:nombre,lastName:apellido,career:profesion} = person;
+// console.log(`${nombre} ${apellido} is ${profesion}.`)
+
+
+// {
+//     const calcAgeReteriment = (yearOfBirth) => {
+//         let age = new Date().getFullYear() - yearOfBirth;
+//         return [age, 40 - age];
+//     }   
+
+//     let [age, retirement] = calcAgeReteriment(1994);
+
+//     console.log(`I'm ${age} and i'll retired myself in ${retirement} years`);
+// }
+
+
+
+
+//////////////////////////////////////////
+// Lecture: Arrays
+/*
+const boxes = document.querySelectorAll('.box');
+
 // ES5
-var cesar = ['Cesar',23];
-var name = cesar[0];
-var age = cesar[1];
+// var boxesArr5 = Array.prototype.slice.call(boxes);
+// boxesArr5.forEach(current => {
+//     current.style.backgroundColor = 'dodgerblue';
+// });
 
-// ES6 
-{
-let [name, age] = ['Cesar',23]
-console.log(`${name} is ${age} years old.`)
+// ES6
+const boxesArr6 = Array.from(boxes);
+boxesArr6.forEach(current => {
+    current.style.backgroundColor = `dodgerblue`;
+});
+
+// ES5  
+// for(var i =0; i < boxesArr5.length; i++){
+//     if (boxesArr5[i].className === 'box blue'){
+//         continue;
+//     }
+//     
+// }
+
+// ES6
+for (const current of boxesArr6){
+    if (current.className.includes(`blue`)){
+        continue;
+    }
+    current.textContent = 'I changed to blue';
 }
 
-let person = {
-    firstName:`Cesar`,
-    lastName:`Cedano`,
-    career:`Developer`,
-};
 
-let {firstName:nombre,lastName:apellido,career:profesion} = person;
-console.log(`${nombre} ${apellido} is ${profesion}.`)
+var ages = [10,12,15,18,16,19];
+// ES5
+// var over18 = ages.map(function(current){
+//     return current >= 18;
+// });
+// console.log(over18);
+// console.log(over18.indexOf(true));
+// console.log(ages[over18.indexOf(true)]);
 
 
-{
-    const calcAgeReteriment = (yearOfBirth) => {
-        let age = new Date().getFullYear() - yearOfBirth;
-        return [age, 40 - age];
-    }   
-
-    let [age, retirement] = calcAgeReteriment(1994);
-
-    console.log(`I'm ${age} and i'll retired myself in ${retirement} years`);
-}
+// ES6
+console.log(ages.findIndex(current => current >= 18));
+console.log(ages.find(current => current >= 18));
+*/
