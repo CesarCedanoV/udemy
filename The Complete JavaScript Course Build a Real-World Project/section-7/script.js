@@ -271,7 +271,7 @@ function isFullAge6(...years){
 }
 
 isFullAge6(2005,1999,1965,2010,2001);
-*/
+
 
 
 // ES5
@@ -290,3 +290,38 @@ function isFullAge6(limit, ...years){
 }
 
 isFullAge6(21,2005,1999,1965,2010,2001);
+*/
+
+
+
+
+
+///////////////////////////////////////
+// Lecture: Default parameters
+
+
+/*
+// ES5
+function DominicanPerson(firstName,lastName,yearOfBirth,nationality){
+
+    nationality === undefined ? nationality = "Dominican" : nationality = nationality;
+
+    this.firstName=firstName;
+    this.lastName=lastName;
+    this.yearOfBirth=yearOfBirth;
+    this.nationality=nationality;
+}
+let Cesar = new DominicanPerson("Cesar","Cedano",1994);
+let Arlenys = new DominicanPerson("Arlenys","Rivera",1996,"Canadian");
+
+
+// ES6
+function DominicanPerson(firstName, lastName, yearOfBirth, nationality=`Dominican`){
+    this.firstName=firstName;
+    this.lastName=lastName;
+    this.yearOfBirth=yearOfBirth;
+    this.nationality=nationality;
+}
+let Cesar = new DominicanPerson("Cesar","Cedano",1994);
+let Arlenys = new DominicanPerson("Arlenys","Rivera",1996,"Canadian");
+*/
