@@ -325,3 +325,43 @@ function DominicanPerson(firstName, lastName, yearOfBirth, nationality=`Dominica
 let Cesar = new DominicanPerson("Cesar","Cedano",1994);
 let Arlenys = new DominicanPerson("Arlenys","Rivera",1996,"Canadian");
 */
+
+
+
+//////////////////////////////////////
+// Lecture: Maps
+
+const question = new Map();
+question.set('question','What is the official name of the latest major JavaScript version?');
+question.set(1,'ES5');
+question.set(2,'ES6');
+question.set(3,'ES2015');
+question.set(4,'ES7');
+question.set('correct',3);
+question.set(true,'Correct answer');
+question.set(false,'Wrong, please try again!');
+
+
+console.log(question.get('question'));
+// console.log(question.size);
+// console.log(question.delete(1));  // expect: true
+// console.log(question.delete(1));  // expect: false
+
+// question.has(3) ? console.log(`Answer 3 is here.`) : console.log(`The correct answer is NOT here.`);
+
+// question.clear()    // clear all the key and values. expect an empty Map()
+
+
+// question.forEach((value,key) => {
+//     console.log(`ES5 ~ This is ${key}, and it's set to ${value}. `);
+// });
+
+for (let [key,value] of question.entries()) {
+    if (typeof(key) === 'number'){
+        console.log(`Answer ${key}: ${value}`);
+    }
+}
+
+const answer = parseInt(prompt('Write the correct answer:'));
+
+console.log(question.get(answer == question.get('correct')));
