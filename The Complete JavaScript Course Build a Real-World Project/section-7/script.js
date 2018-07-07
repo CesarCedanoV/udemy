@@ -172,7 +172,7 @@
 // var name = cesar[0];
 // var age = cesar[1];
 
-// // ES6 
+// // ES6
 // {
 // let [name, age] = ['Cesar',23]
 // console.log(`${name} is ${age} years old.`)
@@ -192,7 +192,7 @@
 //     const calcAgeReteriment = (yearOfBirth) => {
 //         let age = new Date().getFullYear() - yearOfBirth;
 //         return [age, 40 - age];
-//     }   
+//     }
 
 //     let [age, retirement] = calcAgeReteriment(1994);
 
@@ -219,12 +219,12 @@ boxesArr6.forEach(current => {
     current.style.backgroundColor = `dodgerblue`;
 });
 
-// ES5  
+// ES5
 // for(var i =0; i < boxesArr5.length; i++){
 //     if (boxesArr5[i].className === 'box blue'){
 //         continue;
 //     }
-//     
+//
 // }
 
 // ES6
@@ -250,3 +250,43 @@ var ages = [10,12,15,18,16,19];
 console.log(ages.findIndex(current => current >= 18));
 console.log(ages.find(current => current >= 18));
 */
+
+
+////////////////////////////////////
+// Lecture: Rest Parameters
+/*
+// ES5
+function isFullAge5(){
+  var argsArr = Array.prototype.slice.call(arguments);
+  argsArr.forEach(function(element){
+      console.log((2018 - element) >= 18);
+  });
+}
+// isFullAge5(2005,1999,1965,2010,2001);
+
+
+// ES6
+function isFullAge6(...years){
+  years.forEach(element => console.log((2018-element) >= 18));
+}
+
+isFullAge6(2005,1999,1965,2010,2001);
+*/
+
+
+// ES5
+function isFullAge5(limit){
+  var argsArr = Array.prototype.slice.call(arguments,1);
+  argsArr.forEach(function(element){
+      console.log((2018 - element) >= limit);
+  });
+}
+// isFullAge5(18,2005,1999,1965,2010,2001);
+
+
+// ES6
+function isFullAge6(limit, ...years){
+  years.forEach(element => console.log((2018-element) >= limit));
+}
+
+isFullAge6(21,2005,1999,1965,2010,2001);
