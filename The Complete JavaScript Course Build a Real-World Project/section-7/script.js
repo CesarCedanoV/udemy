@@ -330,7 +330,7 @@ let Arlenys = new DominicanPerson("Arlenys","Rivera",1996,"Canadian");
 
 //////////////////////////////////////
 // Lecture: Maps
-
+/*
 const question = new Map();
 question.set('question','What is the official name of the latest major JavaScript version?');
 question.set(1,'ES5');
@@ -365,3 +365,117 @@ for (let [key,value] of question.entries()) {
 const answer = parseInt(prompt('Write the correct answer:'));
 
 console.log(question.get(answer == question.get('correct')));
+*/
+
+
+
+
+//////////////////////////////////////////
+// Lecture: Classes
+/*
+// ES5
+var Person5 = function(name,yearOfBirth,job){
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+};
+
+Person5.prototype.calculateAge = function(){
+    var age = new Date().getFullYear - this.yearOfBirth;
+    console.log(age);
+};
+
+var cesar5 = new Person5('Cesar Cedano;',1994,'Software Developer');
+
+
+// ES6
+class Person6 {
+    constructor(name,yearOfBirth,job,nationality='Dominican'){
+        this.name=name;
+        this.yearOfBirth = yearOfBirth;
+        this.job= job;
+        this.nationality=nationality;
+    }
+    
+    calculateAge(){
+        let age = new Date().getFullYear - this.yearOfBirth;
+        console.log(age);
+    }
+
+    static greeting(){
+        console.log('Hey there!');
+    }
+}
+var cesar6 = new Person6('Cesar Cedano;',1994,'Full Stack Developer');
+
+Person6.greeting();
+*/
+
+///////////////////////////////////////////
+// Lecture: Classes and Subclasses
+/*
+// ES5
+var Person5 = function(name,yearOfBirth,job){
+    this.name = name;
+    this.yearOfBirth = yearOfBirth;
+    this.job = job;
+};
+
+Person5.prototype.calculateAge = function(){
+    var age = new Date().getFullYear() - this.yearOfBirth;
+    console.log(age);
+};
+
+var Developer5 = function(name, yearOfBirth, job, salary,yearsOfExperence=0){
+    Person5.call(this,name,yearOfBirth,job);
+    this.salary = salary;
+    this.yearsOfExperence =yearsOfExperence;
+}   
+Developer5.prototype = Object.create(Person5.prototype);
+
+Developer5.prototype.increaseSalary = function(extra){
+    this.salary+=extra;
+    console.log(this.salary);
+}
+
+
+var cesarDeveloper5 = new Developer5('Cesar',1994,'FullStackDeveloper',80000,4);
+
+cesarDeveloper5.calculateAge();
+cesarDeveloper5.increaseSalary(5000);
+*/
+
+// ES6
+class Person6 {
+    constructor(name,yearOfBirth,job){
+        this.name=name;
+        this.yearOfBirth = yearOfBirth;
+        this.job= job;
+    }
+    
+    calculateAge(){
+        let age = new Date().getFullYear() - this.yearOfBirth;
+        console.log(age);
+    }
+
+}
+
+class Developer6 extends Person6 {
+    constructor(name,yearOfBirth,job,salary,yearsOfExperence){
+        super(name,yearOfBirth,job);
+        this.salary=salary;
+        this.yearsOfExperence=yearsOfExperence;
+    };
+
+    increaseSalary(extra){
+        this.salary+=extra;
+        console.log(this.salary);
+    }
+}
+
+
+
+const cesarDeveloper6 = new Developer6('Cesar',1994,'FullStackDeveloper',80000,4);
+
+cesarDeveloper6.calculateAge();
+cesarDeveloper6.increaseSalary(10000);
